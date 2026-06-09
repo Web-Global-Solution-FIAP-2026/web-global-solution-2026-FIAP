@@ -1,0 +1,24 @@
+Equipe ORION Mission OS
+=======================
+
+Projeto: ORION Mission OS
+Tipo: Plataforma de validacao e simulacao de missoes CubeSat
+
+Integrantes:
+1. Gustavo Noleto – RM 569592
+2. Lucas Gaspar – RM 568616
+3. Luiz Ademario – RM 571182
+
+Papel da Equipe:
+- Desenvolvimento Front-End (HTML, CSS, JavaScript)
+- Design de interface premium aeroespacial
+- Implementacao de funcionalidades interativas
+- Documentacao e entrega do projeto FIAP
+
+Tecnologias Utilizadas:
+- HTML5
+- CSS3 (Flexbox, CSS Variables, Reset, Glassmorphism)
+- JavaScript (ES6+, modular)
+- Python, Arduino, Wokwi, GitHub (stack da solucao)
+
+Data: Junho 2026
