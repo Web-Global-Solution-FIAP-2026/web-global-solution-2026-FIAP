@@ -189,6 +189,131 @@
         </div>
       </div>
     </section>
+
+    <section class="section reveal" id="galeria" aria-labelledby="galeria-title">
+      <div class="section__inner">
+        <header class="section__head">
+          <p class="section__label">Galeria</p>
+          <h2 id="galeria-title" class="section__title">Missões em imagem</h2>
+        </header>
+        <div class="slideshow" aria-label="Galeria de imagens espaciais" aria-roledescription="carrossel">
+          <div class="slideshow__track" id="slideshow-track">
+            <div class="slide active">
+              <img src="img/space-01.jpg" alt="Visão orbital da Terra vista do espaço" width="1200" height="600" loading="eager">
+              <div class="slide__caption">
+                <span>LEO Orbit</span>
+                <p>Monitoramento orbital em tempo real sobre a atmosfera terrestre.</p>
+              </div>
+            </div>
+            <div class="slide">
+              <img src="img/space-02.jpg" alt="Foguete em lançamento contra o céu noturno" width="1200" height="600" loading="lazy">
+              <div class="slide__caption">
+                <span>Launch Sequence</span>
+                <p>Sequência de lançamento com telemetria integrada ao Mission Control.</p>
+              </div>
+            </div>
+            <div class="slide">
+              <img src="img/space-03.jpg" alt="Nebulosa cósmica com estrelas e cores espaciais" width="1200" height="600" loading="lazy">
+              <div class="slide__caption">
+                <span>Deep Space</span>
+                <p>Exploração de deep space com sensores de alta precisão ORION.</p>
+              </div>
+            </div>
+          </div>
+          <button class="slideshow__btn slideshow__btn--prev" id="slide-prev" aria-label="Imagem anterior">&larr;</button>
+          <button class="slideshow__btn slideshow__btn--next" id="slide-next" aria-label="Próxima imagem">&rarr;</button>
+          <div class="slideshow__indicators" id="slide-indicators" role="tablist" aria-label="Indicadores do slideshow">
+            <button class="indicator active" data-slide="0" role="tab" aria-selected="true" aria-label="Slide 1"></button>
+            <button class="indicator" data-slide="1" role="tab" aria-selected="false" aria-label="Slide 2"></button>
+            <button class="indicator" data-slide="2" role="tab" aria-selected="false" aria-label="Slide 3"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt reveal" id="missao" aria-labelledby="missao-title">
+      <div class="section__inner section__inner--narrow">
+        <header class="section__head">
+          <p class="section__label">Registro</p>
+          <h2 id="missao-title" class="section__title">Formulário de Missão</h2>
+        </header>
+        <form class="form" id="mission-form" novalidate>
+          <div class="form-group">
+            <label for="mission-name">Nome da missão</label>
+            <input type="text" id="mission-name" name="mission-name" placeholder="ORION-ALPHA-01" autocomplete="off">
+            <span class="form-error" id="error-mission-name"></span>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="mass">Massa do CubeSat (kg)</label>
+              <input type="number" id="mass" name="mass" placeholder="1.33" step="0.01" min="0">
+              <span class="form-error" id="error-mass"></span>
+            </div>
+            <div class="form-group">
+              <label for="power">Consumo energético (W)</label>
+              <input type="number" id="power" name="power" placeholder="5.0" step="0.1" min="0">
+              <span class="form-error" id="error-power"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="orbit">Órbita desejada</label>
+            <select id="orbit" name="orbit">
+              <option value="">Selecione a órbita</option>
+              <option value="leo">LEO — Low Earth Orbit (160–2000 km)</option>
+              <option value="meo">MEO — Medium Earth Orbit (2000–35786 km)</option>
+              <option value="geo">GEO — Geostationary Orbit (35786 km)</option>
+              <option value="sso">SSO — Sun-Synchronous Orbit</option>
+            </select>
+            <span class="form-error" id="error-orbit"></span>
+          </div>
+          <div class="form-group">
+            <label for="email">Email de contato</label>
+            <input type="email" id="email" name="email" placeholder="comando@missao.orion">
+            <span class="form-error" id="error-email"></span>
+          </div>
+          <button type="submit" class="btn btn--primary btn--full">Registrar missão</button>
+          <div class="form-success" id="form-success" role="alert" hidden>
+            Missão registrada com sucesso. Aguardando confirmação do Mission Control.
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section reveal" id="quiz" aria-labelledby="quiz-title">
+      <div class="section__inner section__inner--narrow">
+        <header class="section__head">
+          <p class="section__label">Avaliação</p>
+          <h2 id="quiz-title" class="section__title">Quiz Espacial</h2>
+        </header>
+        <div class="quiz panel" id="quiz-container">
+          <div class="quiz__progress"><div class="quiz__progress-bar" id="quiz-progress-bar"></div></div>
+          <p class="quiz__counter" id="quiz-counter">Pergunta 1 de 10</p>
+          <h3 class="quiz__question" id="quiz-question"></h3>
+          <div class="quiz__options" id="quiz-options"></div>
+          <div class="quiz__feedback" id="quiz-feedback" hidden></div>
+          <button class="btn btn--primary" id="quiz-next" hidden>Próxima pergunta</button>
+        </div>
+        <div class="quiz-results panel" id="quiz-results" hidden>
+          <h3 class="quiz-results__title">Desempenho final</h3>
+          <div class="quiz-results__grid">
+            <div class="quiz-result-stat">
+              <span class="quiz-result-stat__value" id="result-score">0</span>
+              <span class="quiz-result-stat__label">Pontuação</span>
+            </div>
+            <div class="quiz-result-stat">
+              <span class="quiz-result-stat__value" id="result-correct">0</span>
+              <span class="quiz-result-stat__label">Acertos</span>
+            </div>
+            <div class="quiz-result-stat">
+              <span class="quiz-result-stat__value" id="result-performance">—</span>
+              <span class="quiz-result-stat__label">Desempenho</span>
+            </div>
+          </div>
+          <p class="quiz-results__message" id="result-message"></p>
+          <button class="btn btn--outline" id="quiz-restart">Reiniciar quiz</button>
+        </div>
+      </div>
+    </section>
   </main>
 
   <script src="js/script.js"></script>
