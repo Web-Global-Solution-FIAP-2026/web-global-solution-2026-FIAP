@@ -352,3 +352,157 @@ const SpaceQuiz = (() => {
       explanation: 'Delta-v mede a capacidade de manobra: quanto de velocidade o veículo pode alterar.'
     }
   ];
+  
+  function prepareQuestions(source) {
+    return source.map((item) => {
+      const correctText = item.options[0];
+      const options = [...item.options];
+
+      for (let i = options.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [options[i], options[j]] = [options[j], options[i]];
+      }
+
+      return {
+        question: item.question,
+        options,
+        correct: options.indexOf(correctText),
+        explanation: item.explanation
+      };
+    });
+  }
+
+  let questions = prepareQuestions(baseQuestions);
+
+  const container = document.getElementById('quiz-container');
+  const resultsEl = document.getElementById('quiz-results');
+  const questionEl = document.getElementById('quiz-question');
+  const optionsEl = document.getElementById('quiz-options');
+  const counterEl = document.getElementById('quiz-counter');
+  const progressBar = document.getElementById('quiz-progress-bar');
+  const feedbackEl = document.getElementById('quiz-feedback');
+  const nextBtn = document.getElementById('quiz-next');
+  const restartBtn = document.getElementById('quiz-restart');
+
+  let currentIndex = 0;
+  let score = 0;
+  let correctCount = 0;
+  let answered = false;
+
+  const markers = ['A', 'B', 'C', 'D'];
+
+  function renderQuestion() {
+    const q = questions[currentIndex];
+    answered = false;
+
+    counterEl.textContent = `Pergunta ${currentIndex + 1} de ${questions.length}`;
+    progressBar.style.width = `${((currentIndex + 1) / questions.length) * 100}%`;
+    questionEl.textContent = q.question;
+    feedbackEl.hidden = true;
+    nextBtn.hidden = true;
+
+    optionsEl.innerHTML = '';
+    q.options.forEach((option, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz__option';
+      btn.innerHTML = `
+        <span class="quiz__option-marker">${markers[i]}</span>
+        <span>${option}</span>
+      `;
+      btn.addEventListener('click', () => selectAnswer(i, btn));
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function selectAnswer(index, btn) {
+    if (answered) return;
+    answered = true;
+
+    const q = questions[currentIndex];
+    const isCorrect = index === q.correct;
+
+    if (isCorrect) {
+      score += 100;
+      correctCount++;
+    }
+
+    const allBtns = optionsEl.querySelectorAll('.quiz__option');
+    allBtns.forEach((b, i) => {
+      b.disabled = true;
+      if (i === q.correct) b.classList.add('correct');
+      if (i === index && !isCorrect) b.classList.add('incorrect');
+    });
+
+    feedbackEl.hidden = false;
+    feedbackEl.className = `quiz__feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+    feedbackEl.textContent = isCorrect
+      ? `Correto. ${q.explanation}`
+      : `Incorreto. ${q.explanation}`;
+
+    nextBtn.hidden = false;
+    nextBtn.textContent = currentIndex < questions.length - 1
+      ? 'Próxima Pergunta'
+      : 'Ver Resultado';
+  }
+
+  function showResults() {
+    container.hidden = true;
+    resultsEl.hidden = false;
+
+    const percentage = Math.round((correctCount / questions.length) * 100);
+    let performance = 'Iniciante';
+    let message = 'Continue estudando a indústria espacial para melhorar seu conhecimento.';
+
+    if (percentage >= 90) {
+      performance = 'Comandante';
+      message = 'Desempenho excepcional. Você está pronto para o Mission Control.';
+    } else if (percentage >= 70) {
+      performance = 'Engenheiro';
+      message = 'Ótimo desempenho. Você domina os fundamentos da indústria espacial.';
+    } else if (percentage >= 50) {
+      performance = 'Operador';
+      message = 'Bom progresso. Revise os conceitos e tente novamente.';
+    }
+
+    document.getElementById('result-score').textContent = score;
+    document.getElementById('result-correct').textContent = `${correctCount}/${questions.length}`;
+    document.getElementById('result-performance').textContent = performance;
+    document.getElementById('result-message').textContent = message;
+  }
+
+  function restart() {
+    currentIndex = 0;
+    score = 0;
+    correctCount = 0;
+    questions = prepareQuestions(baseQuestions);
+    container.hidden = false;
+    resultsEl.hidden = true;
+    renderQuestion();
+  }
+
+  function init() {
+    renderQuestion();
+
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    });
+
+    restartBtn.addEventListener('click', restart);
+  }
+
+  return { init };
+})();
+
+document.addEventListener('DOMContentLoaded', () => {
+  ThemeManager.init();
+  Navigation.init();
+  ScrollReveal.init();
+  Slideshow.init();
+  MissionForm.init();
+  SpaceQuiz.init();
+});
